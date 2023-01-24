@@ -22,38 +22,55 @@ const content =
 function App() {
 
   return (
-    <div className="App">
-        <div className={"w-auto rounded m-2 overflow-hidden flex flex-col md:flex-row items-center justify-center"}>
-            <Card item={content.item1} color={"orange"} image={"icon-sedans.svg"}/>
-            <Card item={content.item2} color={"blue"} image={"icon-suvs.svg"}/>
-            <Card item={content.item3} color={"green"} textColor={"green-900"} image={"icon-luxury.svg"}/>
+    <div className="App min-h-screen" >
+        <div className={"flex items-baseline justify-center m-2"} >
+            <div className={"min-h-screen box-border w-auto rounded overflow-hidden flex flex-col items-center justify-center lg:flex-row lg:items-baseline"}>
+                <Card item={content.item1} color={"orange"} image={"icon-sedans.svg"}/>
+                <Card item={content.item2} color={"blue"} image={"icon-suvs.svg"}/>
+                <Card item={content.item3} color={"green"} textColor={"green-900"} image={"icon-luxury.svg"}/>
+            </div>
         </div>
     </div>
   )
 }
 
 const Card = ({color, image, item}) => {
-    const buttonStyle = clsx({
-        "bg-white py-2 px-6 text-sm rounded-3xl hover:text-white" : true,
-        "text-orange-400 hover:bg-orange-400" : color ==="orange",
-        "text-sky-800 hover:bg-sky-800" : color ==="blue",
-        "text-green-900 hover:bg-emerald-900" : color ==="green",
-    })
-
-    const containerStyle = clsx({
-        "p-8 w-72" : true,
-        "bg-orange-400" : color === "orange",
-        "bg-sky-800" : color === "blue",
-        "bg-emerald-900" : color === "green",
-    })
 
     return (
-        <div className={containerStyle }>
+        <CardContainer color={color}>
             <img src={`/src/assets/${image}`} alt={image}/>
             <h2 className="text-3xl text-white uppercase my-4">{item.title}</h2>
             <p className="text-white text-md opacity-75 my-4">{item.content}</p>
-            <button className={buttonStyle}>Learn More</button>
-        </div>
+            <CardButton color={color}/>
+        </CardContainer>
+    )
+}
+
+const CardButton = ({color}) => {
+    const buttonStyle = clsx({
+        "box-border bg-white py-2 px-6 text-sm rounded-3xl border-white border-2 hover:text-white  hover:border-white"  : true,
+        "text-orange-400 hover:bg-orange-400" : color ==="orange",
+        "text-cyan-800 hover:bg-cyan-800" : color ==="blue",
+        "text-teal-900 hover:bg-teal-900" : color ==="green",
+    })
+    return (
+        <button className={buttonStyle}>Learn More</button>
+
+    )
+}
+
+const CardContainer = ({children, color}) => {
+
+    const containerStyle = clsx({
+        "p-8 w-72 box-border " : true,
+        "bg-orange-400" : color === "orange",
+        "bg-cyan-800" : color === "blue",
+        "bg-teal-900" : color === "green",
+    })
+    return (
+    <div className={containerStyle}>
+        {children}
+    </div>
     )
 }
 
